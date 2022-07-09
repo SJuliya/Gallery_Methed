@@ -1,6 +1,50 @@
+import {createElem} from "./createElem.js";
+
 export const renderPhoto = (photoWrapper, photo) => {
     console.log(photo);
-}
+    const img = createElem('img', {
+        class: 'photo__picture',
+        src: photo.urls.regular,
+        alt: photo.description || photo.alt_description,
+        style: 'max-height: 80vh;',
+    });
+
+    const author = createElem('a', {
+        className: 'photo__author',
+        href: photo.user.links.html,
+    });
+
+    const avatarAuthor = createElem('img', {
+        src: photo.user.profile_image.medium,
+        alt: photo.user.bio,
+        title: photo.user.username,
+    });
+
+    const userName = createElem('span', {
+        textContent: photo.user.username,
+    });
+
+    const photoControl = createElem('div', {
+        className: 'photo__control',
+    });
+
+    const photoLike = createElem('button', {
+        id: photo.id,
+        className: 'photo__like',
+        textContent: photo.likes,
+    });
+
+    const photoDownload = createElem('a', {
+        className: 'photo__download',
+        download: 'true',
+        href: photo.urls.full,
+        target: '_blank',
+    });
+
+    author.append(avatarAuthor, userName);
+    photoControl.append(photoLike, photoDownload);
+    photoWrapper.append(img, author, photoControl);
+};
 
 /*         <img class="photo__picture"
              src="https://images.unsplash.com/photo-1654363137357-9d897b5a20d7?crop=entropy&amp;cs=tinysrgb&amp;fm=jpg&amp;ixid=MnwzMDE0MzF8MHwxfGFsbHx8fHx8fHx8fDE2NTQ1MjMzNjE&amp;ixlib=rb-1.2.1&amp;q=80"
